@@ -1,6 +1,16 @@
 // event functions
+let mouseDown = 0;
+document.querySelector("#grid").onmousedown = () => {
+  ++mouseDown;
+};
+document.querySelector("#grid").onmouseup = () => {
+  --mouseDown;
+};
 
 function colMouseOver(e) {
+  if (e.type == "mouseover" && !(mouseDown > 0)) {
+    return;
+  }
   e.target.style.backgroundColor = "red";
 }
 
@@ -16,6 +26,7 @@ function generateGrid(rows, cols) {
       const col = document.createElement("div");
       col.classList.add("col");
       col.setAttribute("id", i.toString() + j.toString());
+      col.onmousedown = colMouseOver;
       col.onmouseover = colMouseOver;
 
       row.appendChild(col);
